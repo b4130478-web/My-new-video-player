@@ -1,296 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Premium Video Player</title>
+    <title>Offline Local Video Player</title>
     <style>
-        :root {
-            --bg-main: #0a0a0c;
-            --bg-card: #141419;
-            --bg-item: #1f1f26;
-            --accent: #ff0055;
-            --accent-hover: #cc0044;
-            --text: #ffffff;
-            --text-muted: #a0a0ab;
-        }
-
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            background: var(--bg-main); 
-            color: var(--text); 
-            margin: 0; 
-            padding: 15px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            box-sizing: border-box;
-        }
-
-        .app-layout { 
-            display: flex; 
-            flex-direction: column;
-            width: 100%; 
-            max-width: 1100px; 
-            background: var(--bg-card); 
-            border-radius: 16px; 
-            overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7); 
-        }
-
-        @media (min-width: 768px) {
-            .app-layout { flex-direction: row; }
-        }
-
-        .player-section { 
-            flex: 2; 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px;
-            border-bottom: 1px solid #2a2a35;
-        }
-
-        @media (min-width: 768px) {
-            .player-section { border-bottom: none; border-right: 1px solid #2a2a35; }
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #000;
-            aspect-ratio: 16/9;
-        }
-
-        video { 
-            width: 100%; 
-            height: 100%;
-            display: block;
-        }
-
-        .gesture-overlay {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 40%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: rgba(255,255,255,0.8);
-            background: rgba(255, 255, 255, 0);
-            pointer-events: auto;
-            user-select: none;
-            transition: background 0.2s;
-        }
-        .gesture-left { left: 0; }
-        .gesture-right { right: 0; }
-        .gesture-flash { background: rgba(255, 255, 255, 0.1); }
-
-        .network-badge { 
-            align-self: flex-start;
-            padding: 6px 14px; 
-            border-radius: 20px; 
-            font-size: 12px; 
-            font-weight: 600; 
-            letter-spacing: 0.5px;
-        }
-        .online { background: #10b981; color: #fff; }
-        .offline { background: #ef4444; color: #fff; }
-
-        .controls-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            background: var(--bg-item);
-            padding: 15px;
-            border-radius: 12px;
-        }
-
-        .control-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            color: var(--text-muted);
-        }
-
-        .control-row input[type="range"] {
-            flex-grow: 1;
-            accent-color: var(--accent);
-            cursor: pointer;
-        }
-
-        .inputs { display: flex; gap: 10px; width: 100%; }
-        input[type="text"], input[type="file"], .search-bar { 
-            flex-grow: 1; 
-            padding: 12px; 
-            border-radius: 8px; 
-            border: 1px solid #3a3a4a; 
-            background: var(--bg-main); 
-            color: var(--text); 
-            font-size: 14px;
-        }
-        input[type="file"] { padding: 8px; }
-        .search-bar { width: 100%; box-sizing: border-box; margin-bottom: 12px; border-color: #2a2a35; }
-        
-        button { 
-            padding: 12px 20px; 
-            border-radius: 8px; 
-            border: none; 
-            background: var(--accent); 
-            color: white; 
-            cursor: pointer; 
-            font-weight: 600; 
-            transition: background 0.2s;
-        }
-        button:hover { background: var(--accent-hover); }
-        .clear-btn { background: #3a3a4a; margin-top: auto; width: 100%; }
-        .clear-btn:hover { background: #5a5a6a; }
-
-        .sidebar { 
-            flex: 1; 
-            padding: 20px; 
-            background: #0e0e12; 
-            display: flex; 
-            flex-direction: column;
-            max-height: 450px; 
-            overflow-y: auto; 
-        }
-
-        @media (min-width: 768px) {
-            .sidebar { max-height: 80vh; }
-        }
-
-        .sidebar h3 { margin-top: 0; font-size: 18px; border-bottom: 1px solid #2a2a35; padding-bottom: 10px; color: var(--text-muted); margin-bottom: 12px; }
-        .playlist-items { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-        .playlist-item { 
-            padding: 14px; 
-            background: var(--bg-card); 
-            border-radius: 8px; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-            font-size: 14px; 
-            border-left: 4px solid transparent;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .playlist-item:hover { background: var(--bg-item); transform: translateX(2px); }
-        .playlist-item.active { background: var(--bg-item); border-left-color: var(--accent); font-weight: 600; }
+        body { background: #111; color: white; text-align: center; font-family: sans-serif; }
+        video { width: 90%; max-width: 800px; margin-top: 20px; background: black; }
+        .picker { margin: 20px; padding: 10px; background: #333; border-radius: 5px; display: inline-block; }
     </style>
 </head>
 <body>
 
-<div class="app-layout">
-    <div class="player-section">
-        <span id="statusBadge" class="network-badge online">Checking Connection...</span>
-        
-        <div class="video-container">
-            <video id="videoPlayer" controls crossorigin="anonymous"></video>
-            <div id="gestureLeft" class="gesture-overlay gesture-left"></div>
-            <div id="gestureRight" class="gesture-overlay gesture-right"></div>
-        </div>
-
-        <div class="controls-panel">
-            <!-- Speed Adjustment -->
-            <div class="control-row">
-                <span>Speed:</span>
-                <input type="range" id="speedSlider" min="0.5" max="2.5" step="0.25" value="1">
-                <span id="speedVal">1.0x</span>
-            </div>
-
-            <!-- Audio Booster Control -->
-            <div class="control-row">
-                <span>🔊 Boost:</span>
-                <input type="range" id="gainSlider" min="1" max="4" step="0.5" value="1">
-                <span id="gainVal">100%</span>
-            </div>
-            
-            <div class="inputs" id="onlineInputs">
-                <input type="text" id="videoUrl" placeholder="Paste streaming video URL...">
-                <button id="addVideoBtn">Add URL</button>
-            </div>
-            <div class="inputs" id="offlineInputs" style="display: none;">
-                <input type="file" id="fileInput" accept="video/*" multiple>
-            </div>
-        </div>
+    <h1>My Offline Video Player</h1>
+    
+    <div class="picker">
+        <label for="videoFile">Choose a video from your phone: </label>
+        <input type="file" id="videoFile" accept="video/*">
     </div>
 
-    <div class="sidebar">
-        <h3 id="playlistTitle">📋 Online Streams</h3>
-        <!-- Interactive Playlist Filtering -->
-        <input type="text" id="searchBar" class="search-bar" placeholder="Search playlist...">
-        <ul class="playlist-items" id="playlist"></ul>
-        <button id="clearStorageBtn" class="clear-btn" style="display:none;">Clear Local Files</button>
-    </div>
-</div>
+    <br>
+    <video id="player" controls></video>
 
-<script>
-    const video = document.getElementById('videoPlayer');
-    const playlistContainer = document.getElementById('playlist');
-    const statusBadge = document.getElementById('statusBadge');
-    const onlineInputs = document.getElementById('onlineInputs');
-    const offlineInputs = document.getElementById('offlineInputs');
-    const playlistTitle = document.getElementById('playlistTitle');
-    
-    const videoUrlInput = document.getElementById('videoUrl');
-    const addVideoBtn = document.getElementById('addVideoBtn');
-    const fileInput = document.getElementById('fileInput');
-    const clearStorageBtn = document.getElementById('clearStorageBtn');
-    const searchBar = document.getElementById('searchBar');
-    
-    const speedSlider = document.getElementById('speedSlider');
-    const speedVal = document.getElementById('speedVal');
-    const gainSlider = document.getElementById('gainSlider');
-    const gainVal = document.getElementById('gainVal');
-    
-    const gestureLeft = document.getElementById('gestureLeft');
-    const gestureRight = document.getElementById('gestureRight');
+    <script>
+        const fileInput = document.getElementById('videoFile');
+        const videoPlayer = document.getElementById('player');
 
-    let onlinePlaylist = [
-        { title: "Big Buck Bunny (Stream)", url: "https://googleapis.com" },
-        { title: "Elephants Dream (Stream)", url: "https://googleapis.com" }
-    ];
-    let offlinePlaylist = [];
-    let currentIndex = 0;
-    let db;
-    
-    // Web Audio Variables
-    let audioCtx, sourceNode, gainNode;
+        fileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // Creates a local blob URL pointing directly to your phone's memory
+                const fileURL = URL.createObjectURL(file);
+                videoPlayer.src = fileURL;
+                videoPlayer.play();
+            }
+        });
+    </script>
 
-    // --- IndexedDB Database Setup ---
-    const request = indexedDB.open("VideoPlayerDB", 1);
-    request.onupgradeneeded = (e) => {
-        db = e.target.result;
-        db.createObjectStore("videos", { keyPath: "id", autoIncrement: true });
-    };
-    request.onsuccess = (e) => {
-        db = e.target.result;
-        loadOfflineTracksFromDB();
-    };
+</body>
+</html>
 
-    function saveTrackToDB(fileBlob, filename) {
-        const transaction = db.transaction(["videos"], "readwrite");
-        const store = transaction.objectStore("videos");
-        store.add({ title: filename, file: fileBlob });
-        transaction.oncomplete = () => loadOfflineTracksFromDB();
-    }
-
-    function loadOfflineTracksFromDB() {
-        if (!db) return;
-        const transaction = db.transaction(["videos"], "readonly");
-        const store = transaction.objectStore("videos");
-
-
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log('Offline mode ready!'))
-      .catch((err) => console.error('Offline setup failed', err));
-  }
-</script>
